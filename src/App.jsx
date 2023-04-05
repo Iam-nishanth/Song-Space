@@ -1,7 +1,10 @@
 import React, { useEffect } from "react"
+import styled from "styled-components";
 import Login from "./Components/Login"
 import Player from "./Components/Player";
+import SearchResult from "./Components/Search";
 import { useStateProvider } from "./Context/StateProvider";
+import CRUD from './Components/CRUD'
 
 function App() {
 
@@ -16,14 +19,29 @@ function App() {
         token,
       })
     }
+
   }, [token, dispatch])
 
   return (
-    <div className="App">
+
+    <Container className="App">
 
       {token ? <Player /> : <Login />}
-    </div>
+      {/* {token ? <CRUD /> : <Login />} */}
+
+
+
+    </Container>
   )
 }
+
+const Container = styled.main`
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh; */
+  
+  
+`
 
 export default App

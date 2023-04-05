@@ -1,20 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MdHomeFilled, MdSearch } from 'react-icons/md'
-import { VscLibrary } from 'react-icons/vsc'
+import { MdAddBox, MdFavorite, MdHomeFilled, MdSearch } from 'react-icons/md'
 import Playlists from '../Playlists'
+import { useSearchContext } from '../../Context/SearchContext'
+import { useHomeContext } from '../../Context/HomeContext'
+import { usePlaylistContext } from '../../Context/PlaylistContext'
+import { useFavoritesContext } from '../../Context/FavouritesContext'
 
 const Sidebar = () => {
+    const { setSearchOpen, searchOpen } = useSearchContext();
+    const { homeOpen, setHomeOpen } = useHomeContext();
+    const { createOpen, setCreateOpen } = usePlaylistContext()
+    const { favOpen, setFavOpen } = useFavoritesContext();
 
+    const SearchToggle = () => setSearchOpen(prev => !prev)
+
+    const HomeToggle = () => setHomeOpen(prev => !prev)
+
+    const CreatePlaylistToggle = () => setCreateOpen(prev => !prev)
+
+    const CreateFavToggle = () => setFavOpen(prev => !prev)
 
 
     return (
         <Container>
             <Logo>SongSpace</Logo>
             <Links>
-                <Link><MdHomeFilled /><span>Home</span></Link>
-                <Link><MdSearch /><span>Search</span></Link>
-                <Link><VscLibrary /><span>Library</span></Link>
+                <Anchor onClick={HomeToggle} ><MdHomeFilled /><span>Home</span></Anchor>
+                <Anchor onClick={SearchToggle} ><MdSearch /><span>Search</span></Anchor>
+                <Anchor onClick={CreatePlaylistToggle}><MdAddBox /><span>Create Playlist</span></Anchor>
+                <Anchor onClick={CreateFavToggle} ><MdFavorite />Favourites</Anchor>
             </Links>
             <Strong>PLAYLISTS</Strong>
             <HR />
@@ -52,7 +67,7 @@ const Links = styled.div`
     padding: 15px;
 
 `
-const Link = styled.h4`
+const Anchor = styled.a`
     
     display: flex;
     align-items: center;
@@ -60,6 +75,7 @@ const Link = styled.h4`
     cursor: pointer;
     transition: 0.3s ease-in-out;
     font-weight: 400;
+    color: #fff;
     svg{
         font-size: 25px;
     }

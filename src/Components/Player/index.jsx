@@ -6,12 +6,17 @@ import Playing from '../Playing/index'
 import Body from '../Body/index'
 import { useStateProvider } from '../../Context/StateProvider'
 import axios from 'axios'
+import SearchResult from '../Search'
+import { useSearchContext } from '../../Context/SearchContext'
 
 const Player = () => {
     const [{ token }, dispatch] = useStateProvider()
+    const { searchOpen } = useSearchContext();
+
+
 
     const bodyRef = useRef()
-    const [navBackground, setNavBackground] = useState(false)
+    const [navBackground, setNavBackground] = useState(false);
 
     const bodyScrolled = () => {
         bodyRef.current.scrollTop >= 30
@@ -63,7 +68,8 @@ const Player = () => {
                 <WrapperBody ref={bodyRef} onScroll={bodyScrolled}>
                     <Navbar navBackground={navBackground} />
                     <Content>
-                        <Body />
+                        {/* <Body /> */}
+                        {searchOpen ? <SearchResult /> : <Body />}
                     </Content>
                 </WrapperBody>
             </Wrapper>
@@ -78,7 +84,7 @@ const Conatainer = styled.section`
     height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 85vh 15vh;
+    grid-template-rows: 680px auto;
     &::-webkit-scrollbar{
         width: 10px;
         &-thumb{
@@ -88,10 +94,9 @@ const Conatainer = styled.section`
 `
 const Wrapper = styled.section`
     display: grid;
-    grid-template-columns: 20vw 80vw;
+    grid-template-columns: 300px auto;
     width: 100%;
     height: 100%;
-    
 
 `
 const WrapperBody = styled.section`

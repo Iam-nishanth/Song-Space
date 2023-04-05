@@ -6,8 +6,9 @@ import { FiRepeat } from 'react-icons/fi'
 import { useStateProvider } from '../../Context/StateProvider'
 import axios from 'axios'
 
+
 const PlayerControls = () => {
-    const [{ token, playerState }, dispatch] = useStateProvider();
+    const [{ token, playerState, currentPlaying }, dispatch] = useStateProvider();
 
     const changeState = async () => {
         const state = playerState ? "pause" : "play";
@@ -25,6 +26,30 @@ const PlayerControls = () => {
             type: 'SET_PLAYER_STATE',
             playerState: !playerState,
         });
+
+    };
+
+    const getCurrentTrack = async () => {
+        const response = await axios.get(
+            "https://api.spotify.com/v1/me/player/currently-playing",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+            }
+        );
+        if (response.data !== "") {
+            const currentPlaying = {
+                id: response.data.item.id,
+                name: response.data.item.name,
+                artists: response.data.item.artists.map((artist) => artist.name),
+                image: response.data.item.album.images[2].url,
+            };
+            dispatch({ type: 'SET_PLAYING', currentPlaying });
+        } else {
+            dispatch({ type: 'SET_PLAYING', currentPlaying: null });
+        }
     };
 
     const changeTrack = async (type) => {
@@ -56,10 +81,14 @@ const PlayerControls = () => {
                 image: res.data.item.album.images[2].url,
             };
             dispatch({ type: 'SET_PLAYING', currentPlaying });
+
+            getCurrentTrack();
         } else {
             dispatch({ type: 'SET_PLAYING', currentPlaying: null });
         }
     };
+
+
 
 
     return (
@@ -71,7 +100,9 @@ const PlayerControls = () => {
                 <CgPlayTrackPrev onClick={() => changeTrack('previous')} />
             </Prev>
             <PausePlay >
-                {playerState ? <BsFillPauseCircleFill onClick={changeState} /> : <BsFillPlayCircleFill onClick={changeState} />}
+                {playerState
+                    ? <BsFillPauseCircleFill onClick={changeState} />
+                    : <BsFillPlayCircleFill onClick={changeState} />}
             </PausePlay>
             <Next>
                 <CgPlayTrackNext onClick={() => changeTrack('next')} />
@@ -91,21 +122,25 @@ const Container = styled.div`
     svg{
         color: #999;
         transition: 0.3s ease-in-out;
+        cursor: pointer;
         &:hover{
-            color: #fff;
+            color: #66ff66;
         }
     }
 `
-const Shuffle = styled.div` font-size:25px ;`
+const Shuffle = styled.div` font-size:20px ;`
 const Prev = styled.div` font-size:30px ;`
 const PausePlay = styled.div` 
         svg{
             font-size:50px ;
             color: #66ff66;
+            &:hover{
+                color: #fff;
+            }
         }
             
 `
 const Next = styled.div` font-size:30px ;`
-const Repeat = styled.div` font-size:25px ;`
+const Repeat = styled.div` font-size:20px ;`
 
 export default PlayerControls

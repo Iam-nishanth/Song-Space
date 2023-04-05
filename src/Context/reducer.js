@@ -6,6 +6,8 @@ export const initialState = {
     playerState: false,
     selectedPlaylist: null,
     selectedPlaylistId: "37i9dQZF1DX0ieekvzt1Ic",
+    searchResults: [],
+    isSearchClosed: false,
 };
 
 const reducer = (state, action) => {
@@ -41,11 +43,34 @@ const reducer = (state, action) => {
                 ...state,
                 selectedPlaylist: action.selectedPlaylist,
             };
+        case 'SET_FAVOURITES':
+            return {
+                ...state,
+                favourites: action.favourites,
+            };
         case 'SET_PLAYLIST_ID':
             return {
                 ...state,
                 selectedPlaylistId: action.selectedPlaylistId,
             };
+        case 'SET_SEARCHED':
+            // console.log(action.Searched)
+            return {
+                ...state,
+                Searched: action.Searched,
+            }
+
+        case 'SET_SEARCH_TOGGLE':
+            return {
+                ...state,
+                isSearchClosed: action.isSearchClosed,
+            }
+        case 'SET_HOME_CONTENT':
+            return {
+                ...state,
+                HomeContent: action.HomeContent
+            }
+
         default:
             return state;
     }

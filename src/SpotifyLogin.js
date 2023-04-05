@@ -13,6 +13,8 @@ export const LoginFunction = () => {
         'user-top-read',
         'playlist-modify-public',
         'playlist-modify-private',
+        'user-library-read',
+        'user-library-modify',
     ]
     window.location.href = `${AuthUrl}?client_id=${ClientId}&redirect_uri=${RedirectUrl}&scope=${AuthScopes.join(" ")}&response_type=token&show_dialog=true`
 }

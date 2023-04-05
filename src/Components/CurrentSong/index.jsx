@@ -7,6 +7,7 @@ const CurrentSong = () => {
 
     const [{ token, currentPlaying }, dispatch] = useStateProvider();
     useEffect(() => {
+
         const getCurrentTrack = async () => {
             const response = await axios.get(
                 "https://api.spotify.com/v1/me/player/currently-playing",
@@ -21,7 +22,7 @@ const CurrentSong = () => {
                 const currentPlaying = {
                     id: response.data.item.id,
                     name: response.data.item.name,
-                    artists: response.data.item.artists.map((artist) => artist.name),
+                    artists: response.data.item?.artists.map((artist) => artist.name),
                     image: response.data.item.album.images[2].url,
                 };
                 dispatch({ type: 'SET_PLAYING', currentPlaying });
@@ -29,9 +30,10 @@ const CurrentSong = () => {
                 dispatch({ type: 'SET_PLAYING', currentPlaying: null });
             }
         };
-        getCurrentTrack();
+
+        getCurrentTrack()
     }, [token, dispatch]);
-    // console.log(currentPlaying)
+
 
 
 
@@ -46,7 +48,7 @@ const CurrentSong = () => {
                     </TrackImage>
                     <Info>
                         <h3>{currentPlaying.name}</h3>
-                        <h4>{currentPlaying.artists.join(", ")}</h4>
+                        <h4>{currentPlaying?.artists.join(', ')}</h4>
                     </Info>
                 </Track>
             )}
@@ -65,7 +67,13 @@ const Track = styled.div`
     gap: 15px;
     padding-left: 20px;
 `
-const TrackImage = styled.div``
+const TrackImage = styled.div`
+    img{
+        width: 60px;
+        height: auto;
+        object-fit: contain;
+    }
+`
 const Info = styled.div`
     display: flex;
     flex-direction: column;

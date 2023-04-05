@@ -1,12 +1,18 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
-import { CgLaptop } from 'react-icons/cg'
 import styled from 'styled-components'
+import { useHomeContext } from '../../Context/HomeContext'
+import { usePlaylistContext } from '../../Context/PlaylistContext'
+import { useFavoritesContext } from '../../Context/FavouritesContext'
 import { useStateProvider } from '../../Context/StateProvider'
 
 const Playlists = () => {
 
     const [{ token, playlists }, dispatch] = useStateProvider();
+    // const { setHomeOpen, homeOpen } = useHomeContext()
+    // const { setCreateOpen, CreateOpen } = usePlaylistContext()
+    // const { setFavOpen, favOpen } = useFavoritesContext()
+
     useEffect(() => {
         const getPlaylistData = async () => {
             const response = await axios.get(
@@ -28,8 +34,9 @@ const Playlists = () => {
     }, [token, dispatch]);
     const changeCurrentPlaylist = (selectedPlaylistId) => {
         dispatch({ type: 'SET_PLAYLIST_ID', selectedPlaylistId });
-        // console.log(first)
+        console.log(selectedPlaylistId)
     };
+
 
     return (
         <Container>

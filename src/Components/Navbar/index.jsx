@@ -6,13 +6,10 @@ import { useStateProvider } from '../../Context/StateProvider'
 const Navbar = ({ navBackground }) => {
 
     const [{ userInfo }, dispatch] = useStateProvider()
+    // console.log(userInfo)
 
     return (
         <Container navBackground={navBackground}>
-            <Search>
-                <FaSearch />
-                <Input type='text' placeholder='What do you want to listen' />
-            </Search>
             <User>
                 <Anchor key={userInfo?.userUrl}>
                     <img src={userInfo?.image} />
@@ -25,7 +22,7 @@ const Navbar = ({ navBackground }) => {
 
 const Container = styled.section`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 0 20px;
     height: 80px;
