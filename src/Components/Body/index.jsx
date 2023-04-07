@@ -1,22 +1,25 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react'
 import { useStateProvider } from '../../Context/StateProvider';
 import { useSearchContext } from '../../Context/SearchContext';
 import { useHomeContext } from '../../Context/HomeContext';
 import { usePlaylistContext } from '../../Context/PlaylistContext';
+import { useFavoritesContext } from '../../Context/FavouritesContext';
 import Homepage from '../Homepage';
 import CreatePlaylist from '../CreatePlaylist';
-import { useFavoritesContext } from '../../Context/FavouritesContext';
 import Favourites from '../Favorites';
-import { MdDelete, MdFavorite, MdPlayCircle, } from 'react-icons/md';
+import { MdDelete, MdPlayCircle, } from 'react-icons/md';
+import { Add, Album, Col1, Container, Delete, Details, DetailsHeading, DetailsPara, DetailsStrong, Duration, DurationPara, Fav, Img, ImgDiv, Info, InfoHeading, InfoPara, Playlist, SongList, SongRow } from '../../Styles/BodyStyles';
+import styled from 'styled-components';
 
 const Body = () => {
 
-    const [{ token, selectedPlaylist, selectedPlaylistId }, dispatch] =
-        useStateProvider();
+    const [{ token, selectedPlaylist, selectedPlaylistId, playlists }, dispatch] = useStateProvider();
+    const [modalOpen, setModalOpen] = useState(false)
+    const [selectedID, setSelectedID] = useState(null);
+    const [selectedSong, setSelectedSong] = useState(null);
 
-    const { searchOpen } = useSearchContext();
+
     const { homeOpen } = useHomeContext()
     const { CreateOpen } = usePlaylistContext()
     const { favOpen } = useFavoritesContext()
@@ -32,6 +35,7 @@ const Body = () => {
                     },
                 }
             );
+            // console.log(response)
             const selectedPlaylist = {
                 id: response.data.id,
                 name: response.data.name,
@@ -49,12 +53,14 @@ const Body = () => {
                     album: track.album.name,
                     context_uri: track.album.uri,
                     track_number: track.track_number,
+                    track_uri: track.uri
                 })),
             };
             dispatch({ type: 'SET_PLAYLIST', selectedPlaylist });
         };
         getInitialPlaylist();
-    }, [token, dispatch, selectedPlaylistId]);
+    }, [token, dispatch, selectedPlaylistId, selectedPlaylist]);
+    // console.log(selectedPlaylist)
 
 
     const playTrack = async (
@@ -133,11 +139,11 @@ const Body = () => {
                 }
             });
 
-            console.log('Playlist deleted successfully! :' + response);
+            console.log(`Playlist deleted successfully! : ${response}`);
         } catch (error) {
             console.error('Error deleting playlist: ', error);
         }
-        window.location.reload()
+        // window.location.reload()
     };
     const addToSavedTracks = async (token, trackId) => {
         try {
@@ -167,6 +173,36 @@ const Body = () => {
     };
 
 
+    const addToPlaylist = async (track_uri, track_number) => {
+        console.log(`Adding song with ${track_uri} item to ${selectedID} playlist`);
+        const response = await axios.post(
+            `https://api.spotify.com/v1/playlists/${selectedID}/tracks`,
+            {
+                uris: [track_uri],
+                position: 0,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        console.log(response);
+    };
+
+    const handleAddToPlaylist = async (track_uri, track_number) => {
+        setModalOpen(false);
+        if (selectedSong) {
+            await addToPlaylist(selectedSong.track_uri, selectedSong.track_number, selectedID);
+        }
+        console.log(track_uri)
+    };
+
+
+
+
+
     if (homeOpen) return <Homepage />
     if (CreateOpen) return <CreatePlaylist />
     if (favOpen) return <Favourites />
@@ -176,167 +212,121 @@ const Body = () => {
 
                 <Playlist>
                     <ImgDiv>
-                        <img src={selectedPlaylist?.image} />
+                        <Img src={selectedPlaylist?.image} />
                     </ImgDiv>
                     <Details>
-                        <strong>PLAYLIST</strong>
-                        <h1>{selectedPlaylist?.name}</h1>
-                        <p>{selectedPlaylist?.description} </p>
+                        <DetailsStrong>PLAYLIST</DetailsStrong>
+                        <DetailsHeading>{selectedPlaylist?.name}</DetailsHeading>
+                        <DetailsPara>{selectedPlaylist?.description} </DetailsPara>
                         <Delete>
-                            <MdPlayCircle onClick={() => playPlaylist(token, selectedPlaylist.uri)} />
-                            <MdDelete onClick={deletePlaylist} />
+                            <MdPlayCircle title='Play the Playlist' onClick={() => playPlaylist(token, selectedPlaylist.uri)} />
+                            <MdDelete title='Delete the Playlist' onClick={deletePlaylist} />
                         </Delete>
-                        {/* <Delete>delete</Delete> */}
 
 
                     </Details>
                 </Playlist>
                 <SongList>
-                    {
-                        selectedPlaylist?.tracks.map(({ id, name, artists, duration, image, album, context_uri, track_number }) => {
-                            return <SongRow key={id}
-                            >
-                                <Col1>
-
-                                    <Album src={image} alt="" onClick={() =>
-                                        playTrack(
-                                            id,
-                                            name,
-                                            artists,
-                                            image,
-                                            context_uri,
-                                            track_number
-                                        )
-                                    } />
+                    {selectedPlaylist?.tracks.map(({ id, name, artists, duration, image, album, context_uri, track_uri, track_number }) => {
+                        return (
+                            <SongRow key={id}>
+                                <Col1 onClick={() =>
+                                    playTrack(
+                                        id,
+                                        name,
+                                        artists,
+                                        image,
+                                        context_uri,
+                                        track_number
+                                    )
+                                }>
+                                    <Album src={image} alt="" />
                                     <Info>
-                                        <h1>{name}</h1>
-                                        <p>{artists.join(', ')}</p>
+                                        <InfoHeading>{name}</InfoHeading>
+                                        <InfoPara>{artists.join(', ')}</InfoPara>
                                     </Info>
                                 </Col1>
                                 <Duration>
-                                    <Fav onClick={() => addToSavedTracks(token, id)} />
-                                    <p>{msToMintues(duration)}</p>
+                                    <Fav title='Add to Favourites' onClick={() => addToSavedTracks(token, id)} />
+                                    <Add title='Add to Playlist' onClick={() => {
+                                        setSelectedSong({
+                                            track_uri: track_uri,
+                                            track_number: track_number,
+                                        });
+                                        setModalOpen(!modalOpen);
+                                    }} />
+                                    <DurationPara>{msToMintues(duration)}</DurationPara>
                                 </Duration>
                             </SongRow>
-                        })
-                    }
+                        );
+                    })}
+                    {modalOpen && (
+                        <Modal>
+                            <ModalSelect
+                                name='playlist'
+                                id='playlist-select'
+                                value={selectedID}
+                                onChange={(event) => setSelectedID(event.target.value)}
+                            >
+                                <ModalOptions>Select Playlist</ModalOptions>
+                                {playlists.map(({ name, id }) => (
+                                    <ModalOptions key={id} value={id}>
+                                        {name}
+                                    </ModalOptions>
+                                ))}
+                            </ModalSelect>
+                            <ModalButton onClick={() => handleAddToPlaylist(selectedID)}>Add</ModalButton>
+                        </Modal>
+                    )}
                 </SongList>
             </Container>
         )
     }
 }
 
-const Container = styled.section`
+const Modal = styled.div`
+    position: fixed;
+    transform: translate(80%,-50%);
+    top: 50%;
+    left: 50%;
     width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-`
-const Playlist = styled.div`
+    max-width: 300px;
+    min-height: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 200px;
-    padding: 20px;
-    gap: 20px;
-    `
-const SongList = styled.div``
-const ImgDiv = styled.div`
-    img{
-        width: 200px;
-        height: 200px;
-        object-fit: contain;
-    }
-`
-const Details = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    justify-content: flex-end;
-    color: #fff;
-    h1{
-        font-size: 40px;
-    }
-    p{
-        font-size: 16px;
-    }
-`
-const Info = styled.div`
-margin-left: 15px;
-h1 {
-    font-size: 16px;
-}p {
-    font-size: 14px;
-    margin-top: 3px;
-    color: gray;
-}`
-const Col1 = styled.div`
-    display: flex;
-    align-items: center;
-    
-    `
-const Album = styled.img`
-    height: 45px;
-  width: 45px;
-`
-const Fav = styled(MdFavorite)`
-        font-size: 25px;
-        opacity: 0;
-        &:hover{
-            ${Info}{
-                opacity: 0.;
-            }
-            color: #66ff66;
-        }
-    `
-const SongRow = styled.div`
-    margin-left: 20px;
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
+    align-self: center;
+    justify-self: center;
     z-index: 100;
-    color: white;
-    width: 100%;
-    justify-content: space-between;
-
-    &:hover {
-    cursor: pointer;
-    background-color: black;
-    opacity: 0.8;
-    ${Fav}{
-        opacity: 1;
-    }
-}
+    flex-direction: column;
 `
-const Duration = styled.div`
-    display: flex;
-    align-self: flex-end;
-    margin-right: 40px;
-    justify-content: space-between;
-    width: 100px;
-    align-items: center;
-    `
-const Delete = styled.div`
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    svg{
-        cursor: pointer;
-        transition: 200ms all ease-in-out;
-        &:hover{
-            opacity: 0.5;
-        }
-    }
-    svg:first-child{
-        font-size: 50px;
-        color: #66ff66;
-    }
-    svg:nth-child(2){
-        font-size: 25px;
-        &:hover{
-            color: red;
-        }
-    }
-    `
+const ModalSelect = styled.select`
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    color: #999;
+    border: transparent;
+    font-size: 16px;
+    outline: none;
+`
+const ModalOptions = styled.option`
+    height: 100%;
+    background-color: black;
+    font-size: 16px;
+    outline-color: transparent;
+    
+`
+const ModalButton = styled.button`
+    width: 100%;
+    max-width: 150px;
+    height: 50px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    font:inherit;
+    border:2px solid #66ff6689;
+    border-radius: 30px;
+`
 
 
 

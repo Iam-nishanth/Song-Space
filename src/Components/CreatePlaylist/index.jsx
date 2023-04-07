@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { useStateProvider } from '../../Context/StateProvider';
+import { Button, Container, Heading, Input } from '../../Styles/CreatePlaylistStyles';
 
 
 
@@ -47,49 +47,14 @@ const CreatePlaylist = () => {
 
     return (
         <Container>
-            <h1>Create a new Playlist</h1>
-            <input type="text" placeholder="Playlist Name" value={playlistName} onChange={handlePlaylistNameChange} />
-            <input type="text" placeholder="Description" value={playlistDescription} onChange={handlePlaylistDescriptionChange} />
-            <button onClick={createPlaylist}>Create Playlist</button>
+            <Heading>Create a new Playlist</Heading>
+            <Input type="text" placeholder="Playlist Name" value={playlistName} onChange={handlePlaylistNameChange} />
+            <Input type="text" placeholder="Description" value={playlistDescription} onChange={handlePlaylistDescriptionChange} />
+            <Button onClick={createPlaylist}>Create Playlist</Button>
         </Container>
     )
 }
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    max-width: 800px;
-    width: 100%;
-    /* justify-content: center; */
-    align-items: center;
-    height: 100vh;
-    gap: 30px;
-    h1{
-        font-size: 60px;
-    }
-    input{
-        height: 50px;
-        border-radius: 30px;
-        padding: 25px;
-        width: 400px;
-        font-size: 16px;
-        font-weight: 600;
-        font-family: inherit;
-    }
-    button{
-        width: 200px;
-        height: 50px;
-        border-radius: 40px;
-        background-color: #66ff66;
-        font-family: inherit;
-        font-size: 14px;
-        font-weight: 600;
-        transition: 300ms all ease-in-out;
-        &:hover{
-            background-color: #999;
-        }
-    }
-    
-`
+
 
 export default CreatePlaylist

@@ -1,12 +1,16 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useStateProvider } from '../../Context/StateProvider';
 import { MdDelete, MdFavorite } from 'react-icons/md'
+import { Album, Col1, Container, Delete, Details, DetailsHeading, Info, InfoH1, InfoPara, SongRow, Songs } from '../../Styles/FavouriteStyles';
+import { json } from 'react-router';
 
 
 const Favourites = () => {
     const [{ token, favourites }, dispatch] = useStateProvider();
+    const [deleteMethod, setDeleteMethod] = useState('');
+
 
     useEffect(() => {
         const getFavouritesData = async () => {
@@ -35,7 +39,7 @@ const Favourites = () => {
             // console.log(data)
         };
         getFavouritesData();
-    }, [token]);
+    }, [token, deleteMethod]);
 
     const playTrack = async (
         id,
@@ -82,8 +86,13 @@ const Favourites = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            console.log(`Track ${id} removed from saved tracks.`);
-            dispatch({ type: 'SET_FAVOURITES', favourites: data });
+            // console.log(`Track ${id} removed from saved tracks.`);
+            console.log(JSON.stringify(response))
+            // console.log(response.config.method)
+            setDeleteMethod(response.config.method)
+
+            // dispatch({ type: 'SET_FAVOURITES', favourites: data });
+
         } catch (error) {
             console.log(`Error removing track ${id}: ${error.message}`);
         }
@@ -91,10 +100,11 @@ const Favourites = () => {
 
 
 
+
     return (
         <Container>
             <Details>
-                <h1><MdFavorite /> Favorite Songs <MdFavorite /></h1>
+                <DetailsHeading><MdFavorite /> Favourite Songs <MdFavorite /></DetailsHeading>
             </Details>
 
             <Songs>
@@ -117,11 +127,11 @@ const Favourites = () => {
                                 }>
                                     <Album src={image} alt="" />
                                     <Info>
-                                        <h1>{name}</h1>
-                                        <p>{artists.join(', ')}</p>
+                                        <InfoH1>{name}</InfoH1>
+                                        <InfoPara>{artists.join(', ')}</InfoPara>
                                     </Info>
                                 </Col1>
-                                <Delete onClick={() => removeSavedTrack(id)} />
+                                <Delete title='Remove from Favourites' onClick={() => removeSavedTrack(id)} />
                             </SongRow>
                         );
                     })}
@@ -130,76 +140,6 @@ const Favourites = () => {
 
     );
 };
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    flex-direction: column;
-    overflow-x: hidden;
-`
-const Details = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 200px;
-    /* justify-content: center; */
-    h1{
-        font-size: 60px;
-        padding-left: 20px;
-        display: flex;
-        align-items: center;
-        color: #66ff66;
-        text-decoration: underline;
-    }
-`
-const Songs = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-`
-const Col1 = styled.div`
-    display: flex;
-`
-const Album = styled.img`
-    height: 50px;
-    width: 50px;
-    object-fit: contain;
-`
-const Delete = styled(MdDelete)`
-    opacity: 0;
-    font-size: 25px;
-    &:hover{
-        color: red;
-    }
 
-`
-const SongRow = styled.div`
-    padding: 0 30px;
-    display: flex;
-    align-items: center;
-    z-index: 10;
-    color: white;
-    width: 100%;
-    height: 70px;
-    justify-content: space-between;
-    
-    &:hover {
-    cursor: pointer;
-    background-color: black;
-    opacity: 0.8;
-        ${Delete}{
-            opacity: 1;
-        }
-    }
-`
-const Info = styled.div`
-padding-left: 15px;
- h1 {
-  font-size: 16px;
-}p {
-  font-size: 14px;
-  margin-top: 3px;
-  color: gray;
-}`
 
 export default Favourites;

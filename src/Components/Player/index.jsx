@@ -8,6 +8,7 @@ import { useStateProvider } from '../../Context/StateProvider'
 import axios from 'axios'
 import SearchResult from '../Search'
 import { useSearchContext } from '../../Context/SearchContext'
+import { Conatainer, Content, CurrentPlaying, Wrapper, WrapperBody } from '../../Styles/PlayerStyels'
 
 const Player = () => {
     const [{ token }, dispatch] = useStateProvider()
@@ -68,7 +69,6 @@ const Player = () => {
                 <WrapperBody ref={bodyRef} onScroll={bodyScrolled}>
                     <Navbar navBackground={navBackground} />
                     <Content>
-                        {/* <Body /> */}
                         {searchOpen ? <SearchResult /> : <Body />}
                     </Content>
                 </WrapperBody>
@@ -79,45 +79,7 @@ const Player = () => {
         </Conatainer>
     )
 }
-const Conatainer = styled.section`
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: grid;
-    grid-template-rows: 680px auto;
-    &::-webkit-scrollbar{
-        width: 10px;
-        &-thumb{
-            background-color: #cccccc25;
-        }
-    }
-`
-const Wrapper = styled.section`
-    display: grid;
-    grid-template-columns: 300px auto;
-    width: 100%;
-    height: 100%;
 
-`
-const WrapperBody = styled.section`
-overflow: auto;
-width: 100%;
-height: 100%;
-&::-webkit-scrollbar{
-        width: 10px;
-        &-thumb{
-            background-color: #cccccc25;
-        }
-    }
-
-`
-const Content = styled.section`
-
-`
-const CurrentPlaying = styled.section`
-    width: 100%;
-    
-`
 
 
 export default Player

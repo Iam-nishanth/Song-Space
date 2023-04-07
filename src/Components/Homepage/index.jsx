@@ -3,6 +3,7 @@ import { useStateProvider } from '../../Context/StateProvider'
 import axios from 'axios';
 import styled from 'styled-components';
 import { useHomeContext } from '../../Context/HomeContext';
+import { Container, Heading, Img, Item, ItemH3, ItemImage, Items } from '../../Styles/HomeStyles';
 
 const Homepage = () => {
 
@@ -18,6 +19,7 @@ const Homepage = () => {
                         Authorization: "Bearer " + token,
                         "Content-Type": "application/json",
                     },
+                    limit: 40,
                 }
             );
             const items = response.data.playlists.items
@@ -52,8 +54,8 @@ const Homepage = () => {
 
                 {(HomeContent !== undefined) && HomeContent.map(({ name, id, image }) =>
                     <Item key={id} onClick={() => changeCurrentPlaylist(id)}>
-                        <div><img src={image} /></div>
-                        <h3>{name}</h3>
+                        <ItemImage><Img src={image} /></ItemImage>
+                        <ItemH3>{name}</ItemH3>
                     </Item>)}
             </Items>
 
@@ -61,35 +63,6 @@ const Homepage = () => {
         </Container>
     )
 }
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    flex-direction: column;
-    img{
-        width: 100%;
-        object-fit: contain;
-   }
-`
-const Items = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap:30px;
-    justify-content: center;
-`
-const Item = styled.div`
-    width: 200px;
-    height: auto;
-    cursor: pointer;
-    &:hover{
-        opacity: 0.2;
-    }
-`
-const Heading = styled.h1`
-    font-size: 40px;
-    color: #fff;
-    padding: 20px 0;
-`
+
 
 export default Homepage

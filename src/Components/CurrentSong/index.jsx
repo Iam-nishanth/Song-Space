@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 import { useStateProvider } from '../../Context/StateProvider'
+import { Container, Track, TrackImage, Img, Info, InfoH1, InfoPara } from '../../Styles/CurrentSongStyles'
 
 const CurrentSong = () => {
 
@@ -34,55 +34,22 @@ const CurrentSong = () => {
         getCurrentTrack()
     }, [token, dispatch]);
 
-
-
-
     return (
-
-
         <Container>
             {currentPlaying && (
                 <Track>
                     <TrackImage>
-                        <img src={currentPlaying.image} alt='currentlyPlaying' />
+                        <Img src={currentPlaying.image} alt='currentlyPlaying' />
                     </TrackImage>
                     <Info>
-                        <h3>{currentPlaying.name}</h3>
-                        <h4>{currentPlaying?.artists.join(', ')}</h4>
+                        <InfoH1>{currentPlaying.name}</InfoH1>
+                        <InfoPara>{currentPlaying?.artists.join(', ')}</InfoPara>
                     </Info>
                 </Track>
             )}
         </Container>
-
-
     )
 }
 
-const Container = styled.div`
 
-`
-const Track = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-left: 20px;
-`
-const TrackImage = styled.div`
-    img{
-        width: 60px;
-        height: auto;
-        object-fit: contain;
-    }
-`
-const Info = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    h3{
-        color: #fff;
-    }h4{
-        color: #999;
-    }
-`
-// const Track = styled.div``
 export default CurrentSong

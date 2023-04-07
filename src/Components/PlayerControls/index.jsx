@@ -5,6 +5,7 @@ import { CgPlayTrackNext, CgPlayTrackPrev } from 'react-icons/cg'
 import { FiRepeat } from 'react-icons/fi'
 import { useStateProvider } from '../../Context/StateProvider'
 import axios from 'axios'
+import { Container, Next, PausePlay, Prev, Repeat, Shuffle } from '../../Styles/PlayerControlsStyles'
 
 
 const PlayerControls = () => {
@@ -114,33 +115,6 @@ const PlayerControls = () => {
     )
 }
 
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    svg{
-        color: #999;
-        transition: 0.3s ease-in-out;
-        cursor: pointer;
-        &:hover{
-            color: #66ff66;
-        }
-    }
-`
-const Shuffle = styled.div` font-size:20px ;`
-const Prev = styled.div` font-size:30px ;`
-const PausePlay = styled.div` 
-        svg{
-            font-size:50px ;
-            color: #66ff66;
-            &:hover{
-                color: #fff;
-            }
-        }
-            
-`
-const Next = styled.div` font-size:30px ;`
-const Repeat = styled.div` font-size:20px ;`
+
 
 export default PlayerControls

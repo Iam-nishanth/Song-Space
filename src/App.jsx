@@ -4,7 +4,6 @@ import Login from "./Components/Login"
 import Player from "./Components/Player";
 import SearchResult from "./Components/Search";
 import { useStateProvider } from "./Context/StateProvider";
-import CRUD from './Components/CRUD'
 
 function App() {
 
@@ -25,12 +24,7 @@ function App() {
   return (
 
     <Container className="App">
-
       {token ? <Player /> : <Login />}
-      {/* {token ? <CRUD /> : <Login />} */}
-
-
-
     </Container>
   )
 }
