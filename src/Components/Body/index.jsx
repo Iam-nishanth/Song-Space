@@ -9,7 +9,7 @@ import Homepage from '../Homepage';
 import CreatePlaylist from '../CreatePlaylist';
 import Favourites from '../Favorites';
 import { MdDelete, MdPlayCircle, } from 'react-icons/md';
-import { Add, Album, Col1, Container, Delete, Details, DetailsHeading, DetailsPara, DetailsStrong, Duration, DurationPara, Fav, Img, ImgDiv, Info, InfoHeading, InfoPara, Playlist, SongList, SongRow } from '../../Styles/BodyStyles';
+import { Add, Album, Col1, Container, Delete, Details, DetailsHeading, DetailsPara, DetailsStrong, Duration, DurationPara, Fav, Img, ImgDiv, Info, InfoHeading, InfoPara, Modal, ModalButton, ModalOptions, ModalSelect, Playlist, SongList, SongRow } from '../../Styles/BodyStyles';
 import styled from 'styled-components';
 
 const Body = () => {
@@ -284,58 +284,7 @@ const Body = () => {
     }
 }
 
-const Modal = styled.div`
-    position: fixed;
-    /* transform: translate(80%,-50%); */
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    max-width: 300px;
-    min-height: 100px;
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
-    justify-self: center;
-    z-index: 100;
-    flex-direction: column;
-    @media (max-width: 600px){
-        left: 30%;
-    }
-    @media (max-width: 480px){
-        left: 15%;
-    }
-    @media (max-width: 350px){
-        left: 2%;
-    }
-`
-const ModalSelect = styled.select`
-    width: 100%;
-    height: 50px;
-    background-color: transparent;
-    color: #999;
-    border: transparent;
-    font-size: 16px;
-    outline: none;
-`
-const ModalOptions = styled.option`
-    height: 100%;
-    background-color: black;
-    font-size: 16px;
-    outline-color: transparent;
-    
-`
-const ModalButton = styled.button`
-    width: 100%;
-    max-width: 150px;
-    height: 50px;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    font:inherit;
-    border:2px solid #66ff6689;
-    border-radius: 30px;
-`
+
 
 
 

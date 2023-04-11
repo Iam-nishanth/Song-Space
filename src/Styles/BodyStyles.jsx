@@ -143,3 +143,55 @@ export const Delete = styled.div`
         }
     }
     `
+export const Modal = styled.div`
+position: fixed;
+/* transform: translate(80%,-50%); */
+top: 50%;
+left: 50%;
+width: 100%;
+max-width: 300px;
+min-height: 100px;
+background-color: #000;
+display: flex;
+justify-content: center;
+align-items: center;
+align-self: center;
+justify-self: center;
+z-index: 100;
+flex-direction: column;
+@media (max-width: 600px){
+    left: 30%;
+}
+@media (max-width: 480px){
+    left: 15%;
+}
+@media (max-width: 350px){
+    left: 2%;
+}
+`
+export const ModalSelect = styled.select`
+width: 100%;
+height: 50px;
+background-color: transparent;
+color: #999;
+border: transparent;
+font-size: 16px;
+outline: none;
+`
+export const ModalOptions = styled.option`
+height: 100%;
+background-color: black;
+font-size: 16px;
+outline-color: transparent;
+
+`
+export const ModalButton = styled.button`
+width: 100%;
+max-width: 150px;
+height: 50px;
+background: rgba(0,0,0,0.5);
+color: #fff;
+font:inherit;
+border:2px solid #66ff6689;
+border-radius: 30px;
+`
