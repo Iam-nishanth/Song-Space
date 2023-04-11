@@ -10,6 +10,40 @@ export const Container = styled.section`
     top: 0;
     transition: 0.3s ease-in-out;
     background: ${({ navBackground }) => navBackground ? 'rgba(0,0,0,0.7)' : 'none'};
+
+    @media (max-width: 730px){
+        justify-content: space-between;
+    }
+`
+export const MobileIcon = styled.div`
+    display: none;
+    transition: .8s all ease;
+    cursor: pointer;
+    svg{
+        font-size: 25px;
+    }
+    @media screen and (max-width: 730px){
+        display: flex;
+        align-items: center;
+    }
+`
+export const Logo = styled.h1`
+    font-size: 40px;
+    font-family: 'Allura',cursive;
+    padding: 15px 20px;
+    transition: 0.2s scale ease-in-out;
+    background: #66FF66;
+    background: linear-gradient(to right, #00ffff 0%, #66FF66 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    &:hover {
+        scale: 1.1;
+    }
+    @media (max-width: 430px){
+        font-size: 35px;
+    }
+
 `
 export const Search = styled.div`
     background-color: #fff;
@@ -46,7 +80,11 @@ export const Anchor = styled.a`
     }
     
 `
-export const Span = styled.h3``
+export const Span = styled.h3`
+    @media (max-width: 500px){
+        display: none;
+    }
+`
 export const Image = styled.img`
     width: 40px;
     height: 40px;

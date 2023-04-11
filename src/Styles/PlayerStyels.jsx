@@ -5,7 +5,7 @@ export const Conatainer = styled.section`
     height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 680px auto;
+    grid-template-rows: 680px 1fr;
     &::-webkit-scrollbar{
         width: 10px;
         &-thumb{
@@ -15,10 +15,13 @@ export const Conatainer = styled.section`
 `
 export const Wrapper = styled.section`
     display: grid;
-    grid-template-columns: 300px auto;
+    grid-template-columns: 0.5fr  2.5fr;
     width: 100%;
     height: 100%;
-
+    @media (max-width: 730px){
+        grid-template-columns:  1fr;
+        
+    }
 `
 export const WrapperBody = styled.section`
 overflow: auto;

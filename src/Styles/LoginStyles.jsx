@@ -8,18 +8,33 @@ export const Container = styled.section`
     height: 100vh;
     width: 100%;
     gap: 40px;
+    text-align: center;
 `
 export const Heading = styled.h1`
     font-size: 160px;
     font-family: 'Allura',cursive;
     color: #66ff66;
-
+    @media (max-width: 730px){
+        font-size: 120px;
+    }
+    @media (max-width: 450px){
+        font-size: 90px;
+    }
+    @media (max-width: 350px){
+        font-size: 75px;
+    }
+    
 `
 export const Para = styled.p`
     font-size: 25px;
     font-family: inherit;
     color: #999;
-
+    @media (max-width: 730px){
+        font-size: 22px;
+    }
+    @media (max-width: 450px){
+        font-size: 16px;
+    }
 `
 
 export const Button = styled.button`
@@ -79,5 +94,9 @@ export const Button = styled.button`
 
     &:hover::before {
     transform: translate3d(100%, 0, 0);
+    }
+    @media (max-width: 730px){
+        width: 250px;
+        /* height: 40px; */
     }
 `

@@ -16,14 +16,23 @@ export const Playlist = styled.div`
     min-height: 200px;
     padding: 20px;
     gap: 20px;
+    @media (max-width: 550px){
+        flex-direction: column;
+        align-items: baseline;
+    }
 `
 
 export const SongList = styled.div``
 export const ImgDiv = styled.div``
 export const Img = styled.img`
     width: 200px;
-    height: 200px;
+    min-height: 200px;
     object-fit: contain;
+@media (max-width: 550px){
+    width: 280px;
+    align-self: center;
+}
+
 `
 export const Details = styled.div`
     display: flex;
@@ -41,12 +50,8 @@ export const DetailsPara = styled.p`
     font-size: 16px;
 `
 export const Info = styled.div`
-margin-left: 15px;
-h1 {
-    
-}p {
-    
-}`
+padding-left: 15px;
+`
 export const InfoHeading = styled.h3`
     font-size: 16px;
 `
@@ -69,7 +74,7 @@ export const Fav = styled(MdFavorite)`
         opacity: 0;
         &:hover{
             ${Info}{
-                opacity: 0.;
+                opacity: 0;
             }
             color: #66ff66;
         }
@@ -93,11 +98,13 @@ export const SongRow = styled.div`
     color: white;
     width: 100%;
     justify-content: space-between;
+    transition: 0.05s color ease-in-out;
 
     &:hover {
     cursor: pointer;
     background-color: black;
     opacity: 0.8;
+
     ${Fav}{
         opacity: 1;
     }

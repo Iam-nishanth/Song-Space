@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MdSearch } from 'react-icons/md'
 import styled from 'styled-components'
 import { useStateProvider } from '../../Context/StateProvider';
+import { Container, Form, FormButton, FormInput, H1, Hr, ImageDiv, Img, Item, ItemDetails, ItemH1, ItemPara, Items } from '../../Styles/SearchStyles';
 
 const SearchResult = () => {
     const [{ token, Searched, selectedPlaylistId }, dispatch] = useStateProvider();
@@ -125,8 +126,8 @@ const SearchResult = () => {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <input type="text" onChange={handleInputChange} ref={searchKeyRef} />
-                <button type="submit"><MdSearch /></button>
+                <FormInput type="text" onChange={handleInputChange} ref={searchKeyRef} />
+                <FormButton type="submit"><MdSearch /></FormButton>
             </Form>
             <H1>Albums</H1>
             <Hr />
@@ -146,8 +147,8 @@ const SearchResult = () => {
                         <ImageDiv>
                             <Img src={image} />
                         </ImageDiv>
-                        <h1>{name}</h1>
-                        <p>{artists.join(', ')}</p>
+                        <ItemH1>{name}</ItemH1>
+                        <ItemPara>{artists.join(', ')}</ItemPara>
 
                     </Item>)}
             </Items>
@@ -168,8 +169,8 @@ const SearchResult = () => {
                         <ImageDiv>
                             <Img src={image} />
                         </ImageDiv>
-                        <h1>{name}</h1>
-                        <p>{artists.join(', ')}</p>
+                        <ItemH1>{name}</ItemH1>
+                        <ItemPara>{artists.join(', ')}</ItemPara>
 
                     </Item>)}
             </Items>
@@ -190,8 +191,11 @@ const SearchResult = () => {
                         <ImageDiv>
                             <Img src={image} />
                         </ImageDiv>
-                        <h1>{name}</h1>
-                        <p>{artists.join(', ')}</p>
+                        <ItemDetails>
+                            <ItemH1>{name}</ItemH1>
+                            <ItemPara>{artists.join(', ')}</ItemPara>
+                        </ItemDetails>
+
 
                     </Item>)}
             </Items>
@@ -201,82 +205,7 @@ const SearchResult = () => {
 
 
 }
-const Container = styled.div`
-    /* border-radius: 30px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-`
-const Items = styled.div`
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    padding: 20px;
-    gap: 30px;
-`
-const Item = styled.div`
-    background: rgba(255,255,255,0.12);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
-    &:hover{
-        opacity: 0.2;
-        transition: 300ms all ease-in-out ;
-    }
-`
-const ImageDiv = styled.div`
-
-`
-const H1 = styled.strong`
-    font-size: 25px;
-    padding-top: 20px;
-    padding-bottom: 6px;
-    `
-const Hr = styled.hr`
-    width: 80%;
-    border: none;
-    border-top: 1px solid #999;
-    padding-bottom: 20px;
-`
-const Img = styled.img`
-    width: 100%;
-    object-fit: contain;
-`
-const Form = styled.form`
-    width: 100%;
-    height: 50px;
-    display: flex;
-    background-color: transparent;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    input{
-        width: 500px;
-        height: 100%;
-        border-radius: 30px;
-        padding: 5px 25px;
-        font-size: 16px;
-    }
-    button{
-        color: #fff;
-        width: 40px;
-        height: 100%;
-        background-color: transparent;
-        outline: none;
-        border: none;
-        display: flex;
-        align-items: center;
-        padding-left: 10px;
-        svg{
-            font-size: 30px;
-        }
-    }
-`
 
 export default SearchResult
 

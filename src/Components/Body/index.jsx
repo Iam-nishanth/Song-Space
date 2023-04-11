@@ -265,12 +265,12 @@ const Body = () => {
                             <ModalSelect
                                 name='playlist'
                                 id='playlist-select'
-                                value={selectedID}
+                                value={selectedID ? selectedID : ''}
                                 onChange={(event) => setSelectedID(event.target.value)}
                             >
                                 <ModalOptions>Select Playlist</ModalOptions>
                                 {playlists.map(({ name, id }) => (
-                                    <ModalOptions key={id} value={id}>
+                                    <ModalOptions key={id} value={id ? id : ''}>
                                         {name}
                                     </ModalOptions>
                                 ))}
@@ -286,13 +286,13 @@ const Body = () => {
 
 const Modal = styled.div`
     position: fixed;
-    transform: translate(80%,-50%);
+    /* transform: translate(80%,-50%); */
     top: 50%;
     left: 50%;
     width: 100%;
     max-width: 300px;
     min-height: 100px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,6 +300,15 @@ const Modal = styled.div`
     justify-self: center;
     z-index: 100;
     flex-direction: column;
+    @media (max-width: 600px){
+        left: 30%;
+    }
+    @media (max-width: 480px){
+        left: 15%;
+    }
+    @media (max-width: 350px){
+        left: 2%;
+    }
 `
 const ModalSelect = styled.select`
     width: 100%;

@@ -14,6 +14,11 @@ export const Details = styled.div`
     width: 100%;
     justify-content: center;
     padding: 20px 0 30px 0;
+    text-align: center;
+
+    @media (max-width: 680px){
+        padding: 20px 0;
+    }
 
 `
 export const DetailsHeading = styled.h1`
@@ -23,6 +28,13 @@ export const DetailsHeading = styled.h1`
     align-items: center;
     color: #66ff66;
     text-decoration: underline;
+    @media (max-width: 620px){
+        font-size: 50px;
+    }
+    @media (max-width: 500px){
+        font-size: 40px;
+    }
+    
 `
 export const Songs = styled.div`
     display: flex;
@@ -49,7 +61,7 @@ export const SongRow = styled.div`
     padding: 0 30px;
     display: flex;
     align-items: center;
-    z-index: 10;
+    z-index: 5;
     color: white;
     width: 100%;
     height: 70px;
@@ -62,6 +74,9 @@ export const SongRow = styled.div`
         ${Delete}{
             opacity: 1;
         }
+    }
+    @media (max-width: 600px){
+        padding: 0 10px;
     }
 `
 export const Info = styled.div`

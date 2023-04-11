@@ -5,6 +5,7 @@ import { useHomeContext } from '../../Context/HomeContext'
 import { usePlaylistContext } from '../../Context/PlaylistContext'
 import { useFavoritesContext } from '../../Context/FavouritesContext'
 import { useStateProvider } from '../../Context/StateProvider'
+import { Container, Para, Wrapper } from '../../Styles/PlaylistStyles'
 
 const Playlists = () => {
 
@@ -51,31 +52,5 @@ const Playlists = () => {
         </Container >
     )
 }
-const Container = styled.div`
-    color: #ccc;
-    height: 100%;   
-`
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-    height: 50vh;
-    max-height: 100%;
-    overflow: auto;
-    &::-webkit-scrollbar{
-        width: 10px;
-        &-thumb{
-            background-color: #cccccc25;
-        }
-    }
-`
-const Para = styled.p`
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    &:hover{
-        color: #999;
-    }
-`
+
 export default Playlists

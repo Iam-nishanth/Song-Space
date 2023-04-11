@@ -9,15 +9,21 @@ import axios from 'axios'
 import SearchResult from '../Search'
 import { useSearchContext } from '../../Context/SearchContext'
 import { Conatainer, Content, CurrentPlaying, Wrapper, WrapperBody } from '../../Styles/PlayerStyels'
+import MobileSidebar from '../SidebarMobile'
 
 const Player = () => {
     const [{ token }, dispatch] = useStateProvider()
     const { searchOpen } = useSearchContext();
 
+    const [isOpen, setIsOpen] = useState(false)
 
 
     const bodyRef = useRef()
     const [navBackground, setNavBackground] = useState(false);
+
+    const toggle = () => {
+        setIsOpen(!isOpen)
+    }
 
     const bodyScrolled = () => {
         bodyRef.current.scrollTop >= 30
@@ -66,8 +72,9 @@ const Player = () => {
         <Conatainer>
             <Wrapper>
                 <Sidebar />
+                <MobileSidebar isOpen={isOpen} toggle={toggle} />
                 <WrapperBody ref={bodyRef} onScroll={bodyScrolled}>
-                    <Navbar navBackground={navBackground} />
+                    <Navbar navBackground={navBackground} isOpen={isOpen} toggle={toggle} />
                     <Content>
                         {searchOpen ? <SearchResult /> : <Body />}
                     </Content>
