@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { useStateProvider } from '../../Context/StateProvider';
 import { MdDelete, MdFavorite } from 'react-icons/md'
 import { Album, Col1, Container, Delete, Details, DetailsHeading, Info, InfoH1, InfoPara, SongRow, Songs } from '../../Styles/FavouriteStyles';
-import { json } from 'react-router';
 
 
 const Favourites = () => {
