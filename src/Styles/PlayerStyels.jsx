@@ -5,7 +5,7 @@ export const Conatainer = styled.section`
     height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 680px 1fr;
+    grid-template-rows: 85% auto;
     &::-webkit-scrollbar{
         width: 10px;
         &-thumb{
