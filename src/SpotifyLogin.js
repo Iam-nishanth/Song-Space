@@ -1,6 +1,7 @@
 export const LoginFunction = () => {
     const ClientId = '4080f5c8eeda400490c1f001fb3dd8c2'
-    const RedirectUrl = 'http://127.0.0.1:5173/'
+    // const RedirectUrl = 'http://127.0.0.1:5173/'
+    const RedirectUrl = 'https://song-space.vercel.app/'
     const AuthUrl = 'https://accounts.spotify.com/authorize'
     const AuthScopes = [
         'user-read-private',
